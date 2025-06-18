@@ -1,4 +1,4 @@
-
+#!/bin/bash
 var_water="water"
 var_stir="stir."
 var_bestchol="bestchol"
