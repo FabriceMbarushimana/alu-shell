@@ -1,0 +1,49 @@
+
+var_water="water"
+var_stir="stir."
+var_bestchol="bestchol"
+
+ var_to_dec() {
+  local input="$1"
+  local var_chars="$2"
+  local var_len=${#var_chars}
+  local result=0
+  local digit
+
+  for (( i=0; i<${#input}; i++ )); do
+    digit="${input:$i:1}"
+    pos=$(expr index "$var_chars" "$digit")
+    pos=$((pos - 1))   
+    result=$((result * var_len + pos))
+  done
+
+  echo "$result"
+}
+
+# Function to convert from decimal to custom base
+dec_to_base() {
+  local number=$1
+  local var_chars="$2"
+  local var_len=${#var_chars}
+  local result=""
+
+  while (( number > 0 )); do
+    digit=$((number % var_len))
+    result="${var_chars:$digit:1}$result"
+    number=$((number / var_len))
+  done
+
+  echo "$result"
+}
+
+# Convert input env variables
+num1=$(var_to_dec "$WATER" "$var_water")
+num2=$(var_to_dec "$STIR" "$var_stir")
+
+# Add the two decimal numbers
+sum=$((num1 + num2))
+
+# Convert sum to base-bestchol and print
+dec_to_base "$sum" "$var_bestchol"
+
+
